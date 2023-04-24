@@ -40,5 +40,5 @@ Utiizing the inbuilt CDC functionality in Azure SQL Database to simplify the set
 ![plot](./Screenshots/SampleOfGeneratedDataFlow1_SQL.png)
 
 ##### CDC Flat Files to SQL database
-Ingests a nested json file from SAP Success Factor, and implements a mechanism to account for deleted rows.
+Flattens a nested json file from SAP Success Factor, and implements a mechanism to account for deleted rows before sinking it in a SQL database
 ![plot](./Screenshots/SampleOfGeneratedDataFlow2_FlatFiles.png)
