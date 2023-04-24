@@ -15,7 +15,7 @@ C) A C# console application that is used to generate json files for pipeline and
 
 ## Installation Steps:
 1) Execute all sql files from the "SQL DB" folder against a Sql Database
-2) Copy the .json file and the folders into the root of an Azure Storage Account (Data lake). 
+2) Copy everything in the "DataLake" folder to the root of an Azure Storage Account (Data lake). This folder contains the hierachy of folders and .json used for one of the demo flows.
 3) Restore files from the "DataFactory" folder into a Git repository used by a Data Factory instance.
 
 ## The C# Application:
