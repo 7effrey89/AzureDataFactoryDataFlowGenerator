@@ -16,6 +16,7 @@ C) A C# console application that is used to generate json files for pipeline and
 2) Restore files from the "DataFactory" folder into a Git repository used by a Data Factory instance.
 
 ## The C# Application:
+![plot](./Screenshots/CSharpApp_GenerateDataFlowAndPipeLines.png)
 ### Meta Data Driven:
 The console application uses a csv files as metadata input for generating the pipelines and dataflows. The file used in this code is located: "assets/2JDE.csv"
 This file contains details about the:
