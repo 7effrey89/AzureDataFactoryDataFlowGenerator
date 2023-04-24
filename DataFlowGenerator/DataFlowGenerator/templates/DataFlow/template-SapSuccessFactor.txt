@@ -1,0 +1,172 @@
+{
+    "name": "{sourceTable}",
+    "properties": {
+        "folder": {
+            "name": "SuccessFactor"
+        },
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "SuccessFactorRawExtract",
+                        "type": "DatasetReference"
+                    },
+                    "name": "Src{sourceTable}"
+                },
+                {
+                    "linkedService": {
+                        "referenceName": "AzureSqlDatabase1",
+                        "type": "LinkedServiceReference"
+                    },
+                    "name": "Ext{destinationTable}"
+                }
+            ],
+            "sinks": [
+                {
+                    "linkedService": {
+                        "referenceName": "AzureSqlDatabase1",
+                        "type": "LinkedServiceReference"
+                    },
+                    "name": "Dst{destinationTable}1"
+                },
+                {
+                    "linkedService": {
+                        "referenceName": "AzureSqlDatabase1",
+                        "type": "LinkedServiceReference"
+                    },
+                    "name": "Dst{destinationTable}2"
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "flatten1"
+                },
+                {
+                    "name": "select1"
+                },
+                {
+                    "name": "alterRow1"
+                },
+                {
+                    "name": "alterRow2"
+                },
+                {
+                    "name": "derivedColumn1"
+                },
+                {
+                    "name": "derivedColumn2"
+                },
+                {
+                    "name": "derivedColumn3"
+                },
+                {
+                    "name": "split1"
+                },
+                {
+                    "name": "join1"
+                }
+
+            ],
+            "scriptLines": [
+                "source(output(",
+                "          d as (results as (",
+                        {jsonColumnMapping}
+                ")[])",
+                "     ),",
+                "     useSchema: false,",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false,",
+                "     enableCdc: true,",
+                "     mode: 'read',",
+                "     skipInitialLoad: true,",
+                "     format: 'json',",
+                "     fileSystem: 'bronze',",
+                "     folderPath: 'SapSuccessFactor/{sourceTable}',",
+                "     documentForm: 'documentPerLine') ~> Src{sourceTable}",
+                 "source(output(",
+                          {targetProjectColumnLine}
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     format: 'table',",
+                "     store: 'sqlserver',",
+                "     schemaName: 'SRC_SCSFCTR',",
+                "     tableName: '{destinationTable}',",
+                "     isolationLevel: 'READ_UNCOMMITTED') ~> Ext{destinationTable}",
+                "Src{sourceTable} foldDown(unroll(d.results, d.results),",
+                "     mapColumn(",
+                          {jsonFlatColumnMapping}
+                "     ),",
+                "     skipDuplicateMapInputs: false,",
+                "     skipDuplicateMapOutputs: false) ~> flatten1",
+
+
+
+
+
+                "ExtUSER select(mapColumn(",
+                           {pkeysSelectActivity}
+                "     ),",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> select1",
+                "derivedColumn3 alterRow(updateIf(isUpdate()),",
+                "     insertIf(isInsert())) ~> alterRow1",
+                "derivedColumn2 alterRow(updateIf(isUpdate())) ~> alterRow2",
+                "flatten1 derive(LAST_UPDATED_TS = currentTimestamp()) ~> derivedColumn1",
+                "split1@Deleted derive(SRC_DELETED_FLG =  \"Y\") ~> derivedColumn2",
+                "split1@Upsert derive(SRC_DELETED_FLG =  \"N\") ~> derivedColumn3",
+                "join1 split(isNull(flatten1@USERID)&&!isNull(select1@USERID)\r",
+                ",",
+                "     disjoint: false) ~> split1@(Deleted, Upsert)",
+                "derivedColumn1, select1 join(",
+                {pkeysIfExistsActivity}
+                "     joinType:'outer',",
+                "     matchType:'exact',",
+                "     ignoreSpaces: false,",
+                "     broadcast: 'auto')~> join1",
+                "alterRow2 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     format: 'table',",
+                "     store: 'sqlserver',",
+                "     schemaName: 'SRC_SCSFCTR',",
+                "     tableName: '{destinationTable}',",
+                "     insertable: true,",
+                "     updateable: true,",
+                "     deletable: false,",
+                "     upsertable: true,",
+                "     keys:[{pkeys}],",
+                "     stagingSchemaName: 'STG_SCSFC',",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     mapColumn(",
+                "          SRC_DELETED_FLG,",
+                "          LAST_UPDATED_TS,",
+                          {destinationColumnMapping}
+                "),",
+                "     errorHandlingOption: 'stopOnFirstError') ~> Dst{destinationTable}1",
+                "alterRow1 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     format: 'table',",
+                "     store: 'sqlserver',",
+                "     schemaName: 'SRC_SCSFCTR',",
+                "     tableName: '{destinationTable}',",
+                "     insertable: true,",
+                "     updateable: true,",
+                "     deletable: false,",
+                "     upsertable: true,",
+                "     keys:[{pkeys}],",
+                "     stagingSchemaName: 'STG_SCSFC',",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     mapColumn(",
+                "          SRC_DELETED_FLG,",
+                "          LAST_UPDATED_TS,",
+                          {destinationColumnMapping}
+                          "),",
+                "     errorHandlingOption: 'stopOnFirstError') ~> Dst{destinationTable}2"
+            ]
+        }
+    }
+}

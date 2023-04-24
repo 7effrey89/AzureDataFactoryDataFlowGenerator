@@ -1,0 +1,90 @@
+{
+    "name": "{destinationTable}",
+    "properties": {
+        "folder": {
+            "name": "JDEE1"
+        },
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "linkedService": {
+                        "referenceName": "AzureSqlDatabase1",
+                        "type": "LinkedServiceReference"
+                    },
+                    "name": "Src{sourceTable}"
+                }
+            ],
+            "sinks": [
+                {
+                    "linkedService": {
+                        "referenceName": "AzureSqlDatabase1",
+                        "type": "LinkedServiceReference"
+                    },
+                    "name": "dst{destinationTable}"
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "derivedColumn1"
+                },
+                {
+                    "name": "alterRow1"
+                }
+            ],
+            "udfLibraries": [
+                {
+                    "referenceName": "JDEE1",
+                    "type": "DataFlowReference"
+                }
+            ],
+            "scriptLines": [
+                "source(output(",
+                          {COLUMN as DATATYPE}
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     enableNativeCdc: true,",
+                "     netChanges: true,",
+                "     skipInitialLoad: true,",
+                "     format: 'table',",
+                "     store: 'sqlserver',",
+                "     schemaName: 'dbo',",
+                "     tableName: '{sourceTable}',",
+                "     isolationLevel: 'READ_COMMITTED') ~> Src{sourceTable}",
+                "Src{sourceTable} derive(",
+                "SRC_DELETED_FLG = iif(isDelete(), \"Y\", \"N\"),",
+                "LAST_UPDATED_TS = currentTimestamp(),",
+                {DerColumnList}
+                ") ~> derivedColumn1",
+                "derivedColumn1 alterRow(updateIf(isUpdate()),",
+                "     updateIf(isDelete())) ~> alterRow1",
+                "alterRow1 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     input(",
+                "          SRC_DELETED_FLG as string,",
+                "          LAST_UPDATED_TS as timestamp,",
+                          {targetProjectColumnLine}
+                "     ),",
+                "     format: 'table',",
+                "     store: 'sqlserver',",
+                "     schemaName: '{destinationSchema}',",
+                "     tableName: '{destinationTable}',",
+                "     insertable: true,",
+                "     updateable: true,",
+                "     deletable: true,",
+                "     upsertable: true,",
+                "     keys:[{pkeys}],",
+                "     stagingSchemaName: 'STG_JDEE1',",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     errorHandlingOption: 'stopOnFirstError',",
+                "     mapColumn(",
+                "          SRC_DELETED_FLG,",
+                "          LAST_UPDATED_TS,",
+                          {destinationColumnMapping}
+                "     )) ~> dst{destinationTable}"
+            ]
+        }
+    }
+}

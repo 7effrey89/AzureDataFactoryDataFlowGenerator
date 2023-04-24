@@ -1,0 +1,78 @@
+{
+    "name": "{sourceTable}",
+    "properties": {
+        "folder": {
+            "name": "SuccessFactor"
+        },
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "linkedService": {
+                        "referenceName": "AzureDataLakeStorage2",
+                        "type": "LinkedServiceReference"
+                    },
+                    "name": "Src{sourceTable}"
+                }
+            ],
+            "sinks": [
+                {
+                    "linkedService": {
+                        "referenceName": "AzureSqlDatabase1",
+                        "type": "LinkedServiceReference"
+                    },
+                    "name": "Dst{destinationTable}"
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "flatten1"
+                },
+                {
+                    "name": "derivedColumn1"
+                }
+            ],
+            "scriptLines": [
+                "source(output(",
+                "          d as (results as ({jsonColumnMapping})[])",
+                "     ),",
+                "     useSchema: false,",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false,",
+                "     enableCdc: true,",
+                "     mode: 'read',",
+                "     skipInitialLoad: true,",
+                "     format: 'json',",
+                "     fileSystem: 'bronze',",
+                "     folderPath: 'SapSuccessFactor/{sourceTable}',",
+                "     documentForm: 'documentPerLine') ~> Src{sourceTable}",
+                "Src{destinationTable} foldDown(unroll(d.results),",
+                "     mapColumn(",
+                          {jsonFlatColumnMapping}
+                "     ),",
+                "     skipDuplicateMapInputs: false,",
+                "     skipDuplicateMapOutputs: false) ~> flatten1",
+                "flatten1 derive(",
+                "SRC_DELETED_FLG = iif(isDelete(), \"Y\", \"N\"),",
+                "LAST_UPDATED_TS = currentTimestamp()",
+                ") ~> derivedColumn1",
+                "derivedColumn1 sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     format: 'table',",
+                "     store: 'sqlserver',",
+                "     schemaName: 'SRC_SCSFCTR',",
+                "     tableName: '{destinationTable}',",
+                "     insertable: true,",
+                "     updateable: false,",
+                "     deletable: false,",
+                "     upsertable: false,",
+                "     truncate: true,",
+                "     stagingSchemaName: 'STG_SCSFC',",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     errorHandlingOption: 'stopOnFirstError') ~> Dst{destinationTable}"
+            ]
+        }
+    }
+}

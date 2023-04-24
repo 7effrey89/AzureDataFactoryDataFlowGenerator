@@ -1,0 +1,189 @@
+{
+    "name": "{destinationTable}",
+    "properties": {
+        "activities": [
+            {
+                "name": "GetAssertion",
+                "type": "WebActivity",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "url": "https://api012.successfactors.eu/oauth/idp",
+                    "method": "POST",
+                    "headers": {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    "body": "client_id=NDdiOTBiYjlkMWJkNjViZmMzMTg5N2Y5OWNmZA&user_id=WorkdayAPI&token_url=https://api012.successfactors.eu/oauth/token&private_key=TUlJRXZnSUJBREFOQmdrcWhraUc5dzBCQVFFRkFBU0NCS2d3Z2dTa0FnRUFBb0lCQVFDdG4zd3FhLzBMN0ZSdVNDbHRxejluZy9SSlRBLyt1U2lLN0ZuQWhPMGRva0xzRnQxQkRaQTBHbSthSFRLQkdyT24wVUdKRGZyVEtXS05FZTFXUGVqN01CeVRUTnZRZ3l4bXh2RmN4T0N2VHhJZExJSk1hS093cmZzWXdJbXAxZFRpOVBZbFZ4SFNHd2tFOG1HSmdJRHd1VGIxUDJHbERobko3bzk4NUVEaHdhMTZkTkd0TGFlM3IxYzZPaEtLbHIrcDFCMzBYSGVuaHhaODRRNFVLM3pKSk5TUFlkaGlnL3crRXE4RElYRHBMNGJCMi9SNlltMzBXQTIyMUpwd2JJSHBUcm9TSzYveUtUSEo1RFIxa0ZlVjVMSVkrZTFuNElzZVBhZ3ltSllXbjJiRVpsWjlxaXFwRVpzaFZnNiswZEp5elJlQWZnQ0c3cnlzZmhxa2JOenRBZ01CQUFFQ2dnRUFaVWZCa0tXSjZXaWxIK2ZzY3RNUW0zdjRCc0hlR3NNOENUNHlaUUdscUVHOU5DZHFUY1p4dGxNdGd3TkJNTnE0cms1OUlrd0xZeDZqSkpPdWxUNXNLQXM2d0JwM3A3eTlLLzhsVU81dit4UHZCeUd0cUpEcDIrakJyd0N4eldhMVZ1ZDZwdkdScmJTam9FVWI3TEFQaDEwajJCQnZEMitZVDVsZ0RvUy83SEN0MmtWUFp0Wk9iTVRJTTRhYXNJcnR2aW9EOHIzYVpxUTVOdDU1TTdPZjNuM1RKaUdxdzd4MEZZWE9aRUpaTHAvZms5RUc0eFBjRi9ON2NjdFk1MlcwTUNnZE5jNkFNbENidTZiZFQ5aHpldFhhR3JGU2VSRzhiSWdRT3dxNnc0azlSRkMzME14NU9PaVpZWExhNlZvNmEyNEQ1YnFBZ1JRU01ING9GSnRKUVFLQmdRRGtOenJ4VWFKNkt6NmFYckF6QlNoMGZlR3hmdDNnY0hlbGpNTnU3Tlk3SDJjSWRPczdkVk5oMmxFM2ZOSy93VWIrYXVJdk5UbHJjWXF6UllDUjhmWFI0eUo0Q1V3MkFxN292TU5pa2F0eFVXbG43NlZUUmozL2NiRGMvd3o1d3dEQjUyRFJsV09rNXlPT2dJRG0rMXMrMnVYK0ttcmp6aUVVaWJTRVRxN0d0UUtCZ1FEQ3dzVUhKN0I3Ti9jTHZQSEZpNVNpZ3RPWDFTVmNnd3UrNm5kVE0vRi9hbWpqOUxlckdaUUg5K0QrWTA2NCtIM0t3WDhkd1NoUnBqT2pCYXhNbmdhbHpuVWhwdDRmcG51RVpHclZuenRUbkJMbXV5QmM4QmdmY2tudXc4Y0k5MEF4bjNFL29XbkZrR3NsM0JFTzRPN0c0RUthRk12Y3BCZ3hEdXlDNlJlb1dRS0JnUURoeGxJbDA2RnVROElYYm4zYXU4dWVFN3Rvb2g1WG9HeDk5NWlROFBXd1lBektyUURiUGVOVDkyeEovTTl5clgvU3kyTWhXUUtKYlRiT3pIKzU0eXBTanViVzRqdm5ZeGd2WUMvY0lFa0FQbzZOS09UaVVhZWNRNW01eVFuSlBrWk5qdDZWK2JrdXR3elNPZ2RNZkhkMDQ1S050T0V5cGdiTURyL3I5UHVyMFFLQmdRQzFCLy9HTDlFdUo0NGR2Z25wT2wzMVZLL0RZTjh5aDZqQ1ZBU0lOUzhUNVdBTUM2c3hnandEMEJlMXZhOHQ1ZVJmTTg2cFpLTEtpamRUSC9IUTRjNkNEazczOGJoa0tRYUV3Q1pCM0psemxRNUlvOFZvUGMvZVl3aHZ4RkRjZDU2V3dZS3R4NmFlZWlmdWNBajNFSU5DSHJBcHNvenYwU09mYmlUUFprU1VPUUtCZ0RWVWxVWnVUdVBXOVVvT0s0bVJjenFnbzIyaFVRL3B0SjNjTWhMcEdyWVEzTkNiNWxUaUEzbk5jMTlWQzFGZFB5ZnBKSVdqYytnSUMzMzU5YXJrVXJ4WlpRRVdncWxhSVFzVUlyODRWTTUrZWxxS3c4Uy9wWGErL1k3VmhRZkJLMHZydU43MnRFV3R4ZUUzelRGaDYwVVNRQUpPcFNFbWhhYzZ6UmRyQSswNiMjI3hlbGxpYXBoYXJtYQ=="
+                }
+            },
+            {
+                "name": "GetOauthToken",
+                "type": "WebActivity",
+                "dependsOn": [
+                    {
+                        "activity": "GetAssertion",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "url": "https://api012.successfactors.eu/oauth/token",
+                    "method": "POST",
+                    "headers": {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    "body": {
+                        "value": "@concat('client_id=NDdiOTBiYjlkMWJkNjViZmMzMTg5N2Y5OWNmZA&company_id=xelliapharma&grant_type=urn:ietf:params:oauth:grant-type:saml2-bearer&assertion=',activity('GetAssertion').output.Response)",
+                        "type": "Expression"
+                    }
+                }
+            },
+            {
+                "name": "Sink Api Output",
+                "type": "Copy",
+                "dependsOn": [
+                    {
+                        "activity": "GetOauthToken",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "RestSource",
+                        "httpRequestTimeout": "00:01:40",
+                        "requestInterval": "00.00:00:00.010",
+                        "requestMethod": "GET",
+                        "additionalHeaders": {
+                            "Authorization": {
+                                "value": "@concat('Bearer ',activity('GetOauthToken').output.access_token)",
+                                "type": "Expression"
+                            }
+                        },
+                        "paginationRules": {
+                            "supportRFC5988": "true"
+                        }
+                    },
+                    "sink": {
+                        "type": "JsonSink",
+                        "storeSettings": {
+                            "type": "AzureBlobFSWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "JsonWriteSettings"
+                        }
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "SuccessFactorSourceTable",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "TableName": {
+                                "value": "@pipeline().parameters.TableName",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "SuccessFactorRawExtract",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "TableName": {
+                                "value": "@pipeline().parameters.TableName",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Data flow1",
+                "type": "ExecuteDataFlow",
+                "dependsOn": [
+                    {
+                        "activity": "Sink Api Output",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "dataflow": {
+                        "referenceName": "{destinationTable}",
+                        "type": "DataFlowReference",
+                        "datasetParameters": {
+                            "{sourceTable}": {
+                                "TableName": "{sourceTable}"
+                            }
+                        }
+                    },
+                    "compute": {
+                        "coreCount": 8,
+                        "computeType": "General"
+                    },
+                    "traceLevel": "Fine",
+                    "continuationSettings": {
+                        "customizedCheckpointKey": "78a59f99-220f-415e-9051-afdc3ed27162"
+                    }
+                }
+            }
+        ],
+        "parameters": {
+            "TableName": {
+                "type": "string",
+                "defaultValue": "User"
+            }
+        },
+        "variables": {
+            "return": {
+                "type": "String"
+            },
+            "assertion": {
+                "type": "String"
+            }
+        },
+        "folder": {
+            "name": "SuccessFactor"
+        },
+        "annotations": [],
+        "lastPublishTime": "2023-03-17T10:04:38Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

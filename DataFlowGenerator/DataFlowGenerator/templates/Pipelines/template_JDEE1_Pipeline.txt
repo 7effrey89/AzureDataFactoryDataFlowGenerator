@@ -1,0 +1,43 @@
+{
+    "name": "{destinationTable}",
+    "properties": {
+        "activities": [
+            {
+                "name": "{destinationTable}",
+                "type": "ExecuteDataFlow",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "dataflow": {
+                        "referenceName": "{destinationTable}",
+                        "type": "DataFlowReference"
+                    },
+                    "compute": {
+                        "coreCount": 8,
+                        "computeType": "General"
+                    },
+                    "traceLevel": "Fine",
+                    "continuationSettings": {
+                        "customizedCheckpointKey": "41b1b73e-5c05-4473-b82c-ab11a7612d58"
+                    }
+                }
+            }
+        ],
+        "variables": {
+            "TableName": {
+                "type": "String"
+            }
+        },
+        "folder": {
+            "name": "JDEE1"
+        },
+        "annotations": []
+    }
+}
