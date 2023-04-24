@@ -42,3 +42,12 @@ Utiizing the inbuilt CDC functionality in Azure SQL Database to simplify the set
 ##### CDC Flat Files to SQL database
 Flattens a nested json file from SAP Success Factor, and implements a mechanism to account for deleted rows before sinking it in a SQL database
 ![plot](./Screenshots/SampleOfGeneratedDataFlow2_FlatFiles.png)
+
+## Background for this solution
+The background for this demo was made when a customer of mine wanted to make a extraction layer (bronze layer in Data Bricks termology), but in the style of ETL where transformation logic is applied to the ingested tables before sinking them in a data source.
+This approach is generally not considered best practice, but there are use cases where this is desired e.g. in case of data privacy concerns where we can obfuscate the data before it is sinked.
+
+Using Data Flows will enable you to generate unique data flows with customized transformation rules which can't be accomplished by using a simple copy activity.
+
+## Taking it to the next level
+Since this project is coded in C# we can make the whole process of generating data flows automatic. This is not covered in this repo, but image putting this code in an Azure Function. Add a blob trigger to the function so the code will execute once a file is added to a specific folder in Azure Storage (Data Lake). This will generate all the data factory artifacts that can be committed automatically to a feature branch which is connected to a Data Factory instance. That way our Data Factory will automatically add new data flows when we make changes to our csv file. 
