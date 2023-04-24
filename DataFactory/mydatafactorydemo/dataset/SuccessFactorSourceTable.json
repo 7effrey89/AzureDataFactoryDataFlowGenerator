@@ -1,0 +1,23 @@
+{
+	"name": "SuccessFactorSourceTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SAP SuccessFactor",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@concat('odata/v2/',dataset().TableName,'?$format=JSON')",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}

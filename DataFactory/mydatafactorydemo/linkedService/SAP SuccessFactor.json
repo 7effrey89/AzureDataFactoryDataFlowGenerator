@@ -1,0 +1,12 @@
+{
+	"name": "SAP SuccessFactor",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://api012.successfactors.eu/",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

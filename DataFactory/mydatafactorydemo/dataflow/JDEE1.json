@@ -1,0 +1,17 @@
+{
+	"name": "JDEE1",
+	"properties": {
+		"type": "UDFLibrary",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"JulianDateToDate(number) as date = iif(i1==0, toDate(\"1900-01-01\"), iif(length(toString(i1))==6, addDays(toDate(toString(2000+toInteger(substring(toString(i1),2,2)))+\"-1-1\"),toInteger(right(toString(i1),3))-1), addDays(toDate(toString(1900+toInteger(substring(toString(i1),1,2)))+\"-1-1\"),toInteger(right(toString(i1),3))-1)) ),",
+				"toTrim(any) as string = trim(i1),",
+				"toDateTimeFormat(double) as timestamp = iif(i1==0, toTimestamp(\"1900-01-01 00:00:00\", \"yyyy-MM-dd HH:mm:ss\"), iif(length(toString(i1))==5, toTimestamp(concat(\"1900-01-01 \",\"0\",left(toString(i1), 1),\":\",substring(toString(i1), 2, 2),\":\",right(toString(i1), 2)), \"yyyy-MM-dd HH:mm:ss\"), toTimestamp(concat(\"1900-01-01 \",left(toString(i1), 2),\":\",substring(toString(i1), 3, 2),\":\",right(toString(i1), 2)), \"yyyy-MM-dd HH:mm:ss\") ) ),",
+				"toYYYYMM(date) as integer = toInteger(concat(toString(year(i1)),toString(month(i1))))"
+			]
+		}
+	}
+}
