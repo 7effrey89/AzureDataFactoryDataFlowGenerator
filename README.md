@@ -18,6 +18,7 @@ C) A C# console application that is used to generate json files for pipeline and
 ## The C# Application:
 ![plot](./Screenshots/CSharpApp_GenerateDataFlowAndPipeLines.png)
 ### Meta Data Driven:
+![plot](./Screenshots/MetaDataInputThatDrivesTheCsharpApp.png)
 The console application uses a csv files as metadata input for generating the pipelines and dataflows. The file used in this code is located: "assets/2JDE.csv"
 This file contains details about the:
 - Source table
