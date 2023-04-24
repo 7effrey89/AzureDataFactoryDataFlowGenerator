@@ -16,7 +16,7 @@ C) A C# console application that is used to generate json files for pipeline and
 2) Restore files from the "DataFactory" folder into a Git repository used by a Data Factory instance.
 
 ## The C# Application:
-### Meta Data Driven
+### Meta Data Driven:
 The console application uses a csv files as metadata input for generating the pipelines and dataflows. The file used in this code is located: "assets/2JDE.csv"
 This file contains details about the:
 - Source table
@@ -28,13 +28,17 @@ This file contains details about the:
    - calling custom made functions from your Data flow libraries e.g. JulianDateToDate(), toYYYYMM()
    - nesting custom made functions e.g. toYYYYMM(JulianDateToDate())
 
-### Pipeline and Data Flow Templates
+### Pipeline and Data Flow Templates:
 The C# application can generate two different dataflows, and one pipeline. The design of these artifacts are determined by the json templates located in "templates" folder.
 These originates from manually made dataflows/pipelines in Data Factory, and has later then been parametrized by replacing the hardcoded configurations with variables that gets their values from the meta data file above.
 
-The two different CDC data flows
-#### Data Flow Sample of CDC SQL to SQL database
+#### Data flow samples provided by this repo:
+Both data flows are designed with Change Data Capture (CDC) in mind.
+
+##### SQL CDC to SQL database
+Utiizing the inbuilt CDC functionality in Azure SQL Database to simplify the setup. With this setup you dont have to make custom mechanisms to monitor for deleted rows.
 ![plot](./Screenshots/SampleOfGeneratedDataFlow1_SQL.png)
 
-#### Data Flow Sample of CDC Flat Files to SQL database
+##### CDC Flat Files to SQL database
+Ingests a nested json file from SAP Success Factor, and implements a mechanism to account for deleted rows.
 ![plot](./Screenshots/SampleOfGeneratedDataFlow2_FlatFiles.png)
