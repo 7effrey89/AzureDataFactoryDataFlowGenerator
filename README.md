@@ -8,10 +8,10 @@ This repository contains a demo on how to generate a pipeline and dataflow using
 - Possibility to execute C# code from your machine. e.g. using Microsoft Vistual Studio Code/ Vistual Studio
 
 ## Components in this demo:
-A) The neccesary sql scripts creating tables and schemas needed for the demo. 
-A) a json file for ingesting a flatfile into a sql database for demoing another dataflow (optional). 
-B) A backup of the Azure Data Factory that was used to add the generated data flows and pipelines. 
-C) A C# console application that is used to generate json files for pipeline and dataflow
+- A) The neccesary sql scripts creating tables and schemas needed for the demo. 
+- B) a json file for ingesting a flatfile into a sql database for demoing another dataflow (optional). 
+- C) A backup of the Azure Data Factory that was used to add the generated data flows and pipelines. 
+- D) A C# console application that is used to generate json files for pipeline and dataflow
 
 ## Installation Steps:
 1) Execute all sql files from the "SQL DB" folder against a Sql Database
